@@ -14,7 +14,9 @@ import struct
 import os
 import sys
 import time
+from io import StringIO
 
+  
 #sys.path.append('./code')
 import utils.drawer as drawer 
 from model.network import Net_PointNR_v2, Net_PointRR_v2, args
@@ -23,6 +25,8 @@ from model.loss import Loss, chamfer_dist
 #import matplotlib
 #matplotlib.use('Agg')
 #import matplotlib.pyplot as plt
+
+torch.cuda.empty_cache()
 
 def save_point_with_RGB(point_tensor, save_path, color_r, color_g, color_b):
     point_np = point_tensor.cpu().numpy().reshape(-1,3)
@@ -43,6 +47,7 @@ if args.if_nonrigid==0:
 else:
     print('The translation is non-rigid.')
 
+torch.cuda.memory_summary(device=None, abbreviated=False)
 if __name__=='__main__':
     if args.if_nonrigid==1:
         rma_net= Net_PointNR_v2().cuda()
@@ -59,11 +64,23 @@ if __name__=='__main__':
         results_path = args.src[:-4]+'_deform_results'
         if not os.path.exists(results_path):
             os.mkdir(results_path)
+        timer=[]
+		tot_time=0
         for stage in range(args.iteration):
+            start_time = time.time()
+            print('starting: '+str(stage))
+            #print('\n')
             stage_result_path = results_path+'/stage_'+str(stage+1)+'.obj'
             # save the results of each stage
             save_point_with_RGB(deformation_points_list[stage].transpose(1,2),stage_result_path,1,0.549,0)
+            timer.append("stage"+str(stage+1)+" -- "+str(time.time() - start_time)+" \n")
+			tot_time+=time.time() - start_time
+            
         print('Finished. The results are saved in the path: '+results_path)
+		timer.append("total time -- "+str(tot_time)+" \n")
+        fp=open(results_path+'/time_logs.txt','w')
+        fp.writelines(timer)
+        fp.close()
         print('##############################################')
         print('\n')
     else:
@@ -81,10 +98,21 @@ if __name__=='__main__':
         results_path = args.src[:-4]+'_deform_results'
         if not os.path.exists(results_path):
             os.mkdir(results_path)
+		timer=[]
+		tot_time=0
         for stage in range(args.iteration):
+			start_time = time.time()
+			print('starting: '+str(stage))
             stage_result_path = results_path+'/stage_'+str(stage+1)+'.obj'
             # save the results of each stage
             save_point_with_RGB(deformation_points_list[stage].transpose(1,2),stage_result_path,1,0.549,0)
+			timer.append("stage"+str(stage+1)+" -- "+str(time.time() - start_time)+" \n")
+			tot_time+=time.time() - start_time
+
         print('Finished. The results are saved in the path: '+results_path)
+		timer.append("total time -- "+str(tot_time)+" \n")
+		fp=open(results_path+'/time_logs.txt','w')
+        fp.writelines(timer)
+        fp.close()
         print('##############################################')
         print('\n')
