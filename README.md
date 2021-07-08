@@ -8,6 +8,8 @@ Project webpage: [https://wanquanf.github.io/RMA-Net.html](https://wanquanf.gith
 
 ![avatar](./images/teaser_version3_low.png)
 
+## Cuda-10.2 required locally, if not present run the script to install
+    sh install_cuda10.2_local.sh
 
 ## 
 To run a lander sample without manual installations simply run
