@@ -8,6 +8,12 @@ Project webpage: [https://wanquanf.github.io/RMA-Net.html](https://wanquanf.gith
 
 ![avatar](./images/teaser_version3_low.png)
 
+
+## 
+To run a lander sample without manual installations simply run
+
+    source automate_rmanet.sh
+    
 ## Prerequisite Installation
 The code has been tested with Python3.8, PyTorch 1.6 and Cuda 10.2:
 
