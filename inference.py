@@ -15,6 +15,7 @@ import os
 import sys
 import time
 from io import StringIO
+import time 
 
   
 #sys.path.append('./code')
@@ -65,7 +66,7 @@ if __name__=='__main__':
         if not os.path.exists(results_path):
             os.mkdir(results_path)
         timer=[]
-		tot_time=0
+        tot_time=0
         for stage in range(args.iteration):
             start_time = time.time()
             print('starting: '+str(stage))
@@ -74,10 +75,10 @@ if __name__=='__main__':
             # save the results of each stage
             save_point_with_RGB(deformation_points_list[stage].transpose(1,2),stage_result_path,1,0.549,0)
             timer.append("stage"+str(stage+1)+" -- "+str(time.time() - start_time)+" \n")
-			tot_time+=time.time() - start_time
+            tot_time+=time.time() - start_time
             
         print('Finished. The results are saved in the path: '+results_path)
-		timer.append("total time -- "+str(tot_time)+" \n")
+        timer.append("total time -- "+str(tot_time)+" \n")
         fp=open(results_path+'/time_logs.txt','w')
         fp.writelines(timer)
         fp.close()
@@ -98,20 +99,20 @@ if __name__=='__main__':
         results_path = args.src[:-4]+'_deform_results'
         if not os.path.exists(results_path):
             os.mkdir(results_path)
-		timer=[]
-		tot_time=0
+        timer=[]
+        tot_time=0
         for stage in range(args.iteration):
-			start_time = time.time()
-			print('starting: '+str(stage))
+            start_time = time.time()
+            print('starting: '+str(stage))
             stage_result_path = results_path+'/stage_'+str(stage+1)+'.obj'
             # save the results of each stage
             save_point_with_RGB(deformation_points_list[stage].transpose(1,2),stage_result_path,1,0.549,0)
-			timer.append("stage"+str(stage+1)+" -- "+str(time.time() - start_time)+" \n")
-			tot_time+=time.time() - start_time
+            timer.append("stage"+str(stage+1)+" -- "+str(time.time() - start_time)+" \n")
+            tot_time+=time.time() - start_time
 
         print('Finished. The results are saved in the path: '+results_path)
-		timer.append("total time -- "+str(tot_time)+" \n")
-		fp=open(results_path+'/time_logs.txt','w')
+        timer.append("total time -- "+str(tot_time)+" \n")
+        fp=open(results_path+'/time_logs.txt','w')
         fp.writelines(timer)
         fp.close()
         print('##############################################')
