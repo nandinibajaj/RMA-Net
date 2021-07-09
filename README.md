@@ -45,13 +45,6 @@ The last argument *--if_nonrigid* represents if the translation between the sour
     sh inference_samples.sh
 
 
-### Datasets
-To show how to construct a dataset that can be used in the code, we list some toy pairs
-in the *[YourProjectPath]/toy_dataset* folder and give a script to pack them into a bin file:
-
-    code for constructing a dataset
-
-
 ## Citation
 Please cite this paper with the following bibtex:
 
